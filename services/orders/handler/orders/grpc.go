@@ -44,3 +44,13 @@ func (h *OrdersGrpcHandler) GetOrders(ctx context.Context, req *orders.GetOrders
 	res := &orders.GetOrderResponse{Orders: orderCollection}
 	return res, nil
 }
+
+func (h *OrdersGrpcHandler) DeleteOrder(ctx context.Context, req *orders.DeleteOrderRequest) (*orders.DeleteOrderResponse, error) {
+	err := h.ordersService.DeleteOrder(ctx, req.OrderId)
+	if err != nil {
+		return nil, err
+	}
+
+	res := &orders.DeleteOrderResponse{Status: "success"}
+	return res, nil
+}

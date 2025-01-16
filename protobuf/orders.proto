@@ -1,10 +1,11 @@
 syntax = "proto3";
 
-option go_package = "github.com/n-chetelat/common/orders";
+option go_package = "github.com/n-chetelat/garlic-service/common/orders";
 
 service OrderService {
     rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {}
     rpc GetOrders(GetOrdersRequest) returns (GetOrderResponse) {}
+    rpc DeleteOrder(DeleteOrderRequest) returns (DeleteOrderResponse) {}
 }
 
 message Order {
@@ -30,4 +31,12 @@ message GetOrdersRequest {
 
   message GetOrderResponse {
     repeated Order orders = 1;
+}
+
+message DeleteOrderRequest {
+    int32 orderId = 1;
+}
+
+message DeleteOrderResponse {
+    string status = 1;
 }
