@@ -3,11 +3,16 @@ package service
 import (
 	"context"
 	"fmt"
+	"sync"
 
 	"github.com/n-chetelat/garlic-service/services/common/genproto/orders"
 )
 
-var ordersDB = make([]*orders.Order, 0)
+var (
+	ordersDB   = make([]*orders.Order, 0)
+	orderIdSeq = int32(1)
+	mu         sync.Mutex
+)
 
 type OrderService struct {
 }
@@ -17,6 +22,12 @@ func NewOrdersService() *OrderService {
 }
 
 func (s *OrderService) CreateOrder(ctx context.Context, order *orders.Order) error {
+	mu.Lock()
+	defer mu.Unlock()
+
+	order.OrderId = orderIdSeq
+	orderIdSeq++
+
 	ordersDB = append(ordersDB, order)
 	return nil
 }

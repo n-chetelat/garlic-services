@@ -21,5 +21,6 @@ func ParseJSON(r *http.Request, v any) error {
 		return fmt.Errorf("missing request body")
 	}
 
+	defer r.Body.Close()
 	return json.NewDecoder(r.Body).Decode(v)
 }
