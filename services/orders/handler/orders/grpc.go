@@ -44,6 +44,23 @@ func (h *OrdersGrpcHandler) GetOrders(ctx context.Context, req *orders.GetOrders
 	return res, nil
 }
 
+func (h *OrdersGrpcHandler) UpdateOrder(ctx context.Context, req *orders.UpdateOrderRequest) (*orders.UpdateOrderResponse, error) {
+	order := &orders.Order{
+		OrderId:    req.GetOrderId(),
+		CustomerId: req.GetCustomerId(),
+		ProductId:  req.GetProductId(),
+		Quantity:   req.GetQuantity(),
+	}
+
+	err := h.ordersService.UpdateOrder(ctx, order)
+	if err != nil {
+		return nil, err
+	}
+
+	res := &orders.UpdateOrderResponse{Status: "success"}
+	return res, nil
+}
+
 func (h *OrdersGrpcHandler) DeleteOrder(ctx context.Context, req *orders.DeleteOrderRequest) (*orders.DeleteOrderResponse, error) {
 	err := h.ordersService.DeleteOrder(ctx, req.OrderId)
 	if err != nil {

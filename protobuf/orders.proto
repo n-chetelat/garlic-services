@@ -5,11 +5,12 @@ option go_package = "github.com/n-chetelat/garlic-service/common/orders";
 service OrderService {
     rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {}
     rpc GetOrders(GetOrdersRequest) returns (GetOrderResponse) {}
+    rpc UpdateOrder(UpdateOrderRequest) returns (UpdateOrderResponse) {}
     rpc DeleteOrder(DeleteOrderRequest) returns (DeleteOrderResponse) {}
 }
 
 message Order {
-    int32 OrderId = 1;
+    string OrderId = 1;
     int32 CustomerId = 2;
     int32 ProductId = 3;
     int32 Quantity = 4;
@@ -29,12 +30,23 @@ message GetOrdersRequest {
     int32 customerID = 1;
 }
 
-  message GetOrderResponse {
+message GetOrderResponse {
     repeated Order orders = 1;
 }
 
+message UpdateOrderRequest {
+    string orderId = 1;
+    int32 customerId = 2;
+    int32 productId = 3;
+    int32 quantity = 4;
+}
+
+message UpdateOrderResponse {
+    string status = 1;
+}
+
 message DeleteOrderRequest {
-    int32 orderId = 1;
+    string orderId = 1;
 }
 
 message DeleteOrderResponse {

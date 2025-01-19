@@ -1,8 +1,8 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/n-chetelat/garlic-service/services/common/genproto/orders"
 	"github.com/n-chetelat/garlic-service/services/common/util"
@@ -51,14 +51,13 @@ func (h *OrdersHttpHandler) CreateOrder(w http.ResponseWriter, r *http.Request) 
 }
 
 func (h *OrdersHttpHandler) DeleteOrder(w http.ResponseWriter, r *http.Request) {
-	orderIdStr := r.URL.Query().Get("orderId")
-	orderId, err := strconv.Atoi(orderIdStr)
-	if err != nil {
-		util.WriteError(w, http.StatusBadRequest, err)
+	orderId := r.URL.Query().Get("orderId")
+	if orderId == "" {
+		util.WriteError(w, http.StatusBadRequest, fmt.Errorf("orderId is required"))
 		return
 	}
 
-	err = h.orderService.DeleteOrder(r.Context(), int32(orderId))
+	err := h.orderService.DeleteOrder(r.Context(), orderId)
 	if err != nil {
 		util.WriteError(w, http.StatusInternalServerError, err)
 		return

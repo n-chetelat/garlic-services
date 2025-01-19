@@ -42,13 +42,7 @@ func (s *httpServer) handleCreateOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	order := &orders.CreateOrderRequest{
-		CustomerId: req.GetCustomerId(),
-		ProductId:  req.GetProductId(),
-		Quantity:   req.GetQuantity(),
-	}
-
-	_, err = s.client.CreateOrder(ctx, order)
+	_, err = s.client.CreateOrder(ctx, &req)
 	if err != nil {
 		log.Fatalf("client error: %v", err)
 	}

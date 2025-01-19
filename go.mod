@@ -3,6 +3,7 @@ module github.com/n-chetelat/garlic-service
 go 1.23.4
 
 require (
+	github.com/oklog/ulid/v2 v2.1.0 // indirect
 	golang.org/x/net v0.30.0 // indirect
 	golang.org/x/sys v0.26.0 // indirect
 	golang.org/x/text v0.19.0 // indirect
